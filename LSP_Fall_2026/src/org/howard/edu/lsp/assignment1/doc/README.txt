@@ -20,5 +20,4 @@ of my knowledge and heighten my performance on examinations and the final projec
 
 10.	No, scholarship status does not entitle a student to different grading, deadline, attendance, or course requirements.
 
-
 "I acknowledge that I have read the course syllabus and understand that I am responsible for complying with all course policies, assignment requirements, and monitoring Piazza throughout the semester."
