@@ -1,2 +1,2 @@
-# LSP_REPO_symmetrical-waffle.
+# LSP_REPO_Assignment1.
 LSP assignment1
