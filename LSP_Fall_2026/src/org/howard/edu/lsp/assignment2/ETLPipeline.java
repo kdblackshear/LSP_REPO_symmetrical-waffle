@@ -95,10 +95,69 @@ public class ETLPipeline {
 				
 				String department = rawDept;
 				
+				//Calculate base and overtime pay
+				double grossPay;
+				if (hoursWorked <= 40.00) {
+					grossPay = hoursWorked * hourlyRate;
+				} else {
+					double overtimeHours = hoursWorked - 40.00;
+					grossPay = (40.00 * hourlyRate) + (overtimeHours * hourlyRate * 1.5);
+				}
 				
+				//Apply IT bonus
+				if ("IT".equals(department)) {
+					grossPay *= 1.05;
+				}
 				
+				//Round grossPay
+				BigDecimal roundedGrossPayBD = BigDecimal.valueOf(grossPay).setScale(2, RoundingMode.HALF_UP);
+				double roundedGrossPay = roundedGrossPayBD.doubleValue();
+				
+				//Determine pay level
+				String payLevel;
+				if (roundedGrossPay < 500.00) {
+					payLevel = "Low";
+				} else if (roundedGrossPay <= 999.99) {
+					payLevel = "Standard";
+				} else if (roundedGrossPay <= 1999.99) {
+					payLevel = "High";
+				} else {
+					payLevel = "Executive";
+				}
+				
+				//Determine employment status
+				String employmentStatus;
+				if (hoursWorked < 30.00) {
+					employmentStatus = "Part-Time";
+				} else {
+					employmentStatus = "Full-Time";
+				}
+				
+				//Write output
+				String formattedHours = String.format("%.2f", hoursWorked);
+				String formattedRate = String.format("%.2f", hourlyRate);
+				String formattedGross = String.format("%.2f", roundedGrossPayBD);
+				
+				writer.write(String.format("%d,%s,%s,%s,%s,%s,%s,%s", 
+						employeeId, name, department, formattedHours, 
+						formattedRate, formattedGross, payLevel, employmentStatus));
+				writer.newLine();
+				
+				rowsTransformed++;
 			}
+		
+		//Handle any access errors
+		} catch (IOException e) {
+			System.err.println("Error processing the ETL file pipeline: " + e.getMessage());
+			return;
 		}
+		
+		//Print execution summary
+		System.out.println("ETL processing complete.");
+		System.out.println("Rows Read: " + rowsRead);
+		System.out.println("Rows Tarnsformed: " + rowsTransformed);
+		System.out.println("Rows Skipped: " + rowsSkipped);
+		System.out.println("Output file path written: " + outputPath);
 
 	}
 
