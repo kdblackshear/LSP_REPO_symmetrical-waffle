@@ -51,7 +51,7 @@ public class ETLPipeline {
 					continue;
 				}
 				
-				//Split string into fields
+				//Split file into fields
 				String[] fields = line.split(",", -1);
 				
 				//Check for 5 fields
