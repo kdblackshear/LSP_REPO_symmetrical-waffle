@@ -1,0 +1,5 @@
+According to Arthur Riel's heuristics, this class violates the encapsulation principle that states that all data should be within its own class. All of the instance variables in the provided class are declared as public, which breaks the encapsulation. The breaking of encapsulation makes the class vulnerable to corruption or mutation without validating these changes, creating a less than reliable set of data. 
+
+To go along with that, this class is responsible for a myriad of orthogonal concerns, which violates a second Riel heuristic principle that a single class should only capture on abstraction and to not create "god classes". This violation creates low cohesion within the class, which in turn makes the class harder to test, maintain, and reuse.
+
+Lastly, this class exemplifies dependencies within the infrastructure, like between FileWriter and System.out. This is a violation of Riel's heuristic principle of avoiding coupling in regard to I/O mechanisms that fall within business logic. A consequence of this is the hampering of unit testing because it will lead to writing to the physical local file system and cluttering when registerStudent() is executed. 
